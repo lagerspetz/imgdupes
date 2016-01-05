@@ -342,7 +342,7 @@ for dupset in nodupes:
                 aux=dupset[i]
                 ruta=os.path.join(aux['dir'],aux['name'])
                 sys.stderr.write( "[%d] %-40s %s\n" % (i+1,ruta,metadata_summary(ruta)))
-            sys.stderr.write( "Suggested: %s\n" % ospath.join(sugg['dir'],sugg['name']))
+            sys.stderr.write( "Suggested: %s\n" % os.path.join(sugg['dir'],sugg['name']))
             answer=raw_input("Set %d of %d, preserve files [u, %d - %d, all, show, detail, help, quit] (default: all): " % (nset,len(nodupes),1,len(dupset)))
             if answer in ["detail","d"]:
                 # Show detailed differences in EXIF tags
