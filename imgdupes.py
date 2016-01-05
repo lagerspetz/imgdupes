@@ -326,6 +326,7 @@ for dupset in nodupes:
         while not optselected:
             sugg = None
             mostTags = 0
+            minSlashes = 29
             # Determine suggested selection using these criteria:
             for item in dupset:
                 ruta=os.path.join(item['dir'],item['name'])
@@ -335,6 +336,12 @@ for dupset in nodupes:
                 if len(itemTags) > mostTags:
                     sugg = item
                     mostTags = len(itemTags)
+            if sugg is None:
+                for item in dupset:
+                    ruta=os.path.join(item['dir'],item['name'])
+                    if ruta.count("/") < minSlashes:
+                        sugg = item
+                        minSlashes = ruta.count("/")
             if sugg is None:
                 sugg = dupset[0]
 
