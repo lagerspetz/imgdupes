@@ -381,9 +381,9 @@ for dupset in nodupes:
                 for item in dupset:
                     p = os.path.join(item['dir'],item['name'])
                     if item is not sugg:
-                        print "would delete "+p
-                    else:
-                        print "would keep "+p
+                        os.remove(p)
+                        del jpegs[p]
+                optselected=True
             else:
                 # If it's no option, assume it's a number and delete all pictures except the chosen one
                 answer=int(answer)-1
