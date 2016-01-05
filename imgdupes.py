@@ -332,8 +332,9 @@ for dupset in nodupes:
                 if "raamat" in item['dir']:
                     sugg = item
                 itemTags = tags(ruta)
-                if itemTags > mostTags:
+                if len(itemTags) > mostTags:
                     sugg = item
+                    mostTags = len(itemTags)
             if sugg is None:
                 sugg = dupset[0]
 
