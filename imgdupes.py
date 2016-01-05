@@ -402,6 +402,7 @@ for dupset in nodupes:
                     if item is not sugg:
                         os.remove(p)
                         del jpegs[p]
+                        modif=True
                 optselected=True
             else:
                 # If it's no option, assume it's a number and delete all pictures except the chosen one
