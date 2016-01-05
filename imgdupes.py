@@ -253,10 +253,15 @@ for dirName, subdirList, fileList in os.walk(rootDir):
             # Si el fichero no está en la caché, o está pero con tamaño diferente, añadirlo
             if (ruta not in jpegs) or ((ruta in jpegs) and (jpegs[ruta]['size']!=os.path.getsize(ruta))):
                 sys.stderr.write("   Calculating hash of %s...\n" % ruta)
+                jpgblockhash = []
+                try:
+                    jpgblockhash = hashcalc(ruta,pool,args.method)
+                except:
+                    jpgblockhash.append(hashlib.md5(open(ruta, 'rb').read()).digest())
                 jpegs[ruta]={
                         'name':fname,
                         'dir':dirName,
-                        'hash':hashcalc(ruta,pool,args.method),
+                        'hash':jpgblockhash,
                         'size':os.path.getsize(ruta)
                         }
                 modif=True
