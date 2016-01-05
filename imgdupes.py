@@ -217,6 +217,7 @@ parser=argparse.ArgumentParser(description="Checks for duplicated images in a di
 parser.add_argument('directory',help="Base directory to check")
 parser.add_argument('-1','--sameline',help="List each set of matches in a single line",action='store_true',required=False)
 parser.add_argument('-d','--delete',help="Prompt user for files to preserve, deleting all others",action='store_true',required=False)
+parser.add_argument('-a','--auto',help="Always preserve only the suggested files, deleting all others",action='store_true',required=False)
 parser.add_argument('-c','--clean',help="Don't write to disk signatures cache",action='store_true',required=False)
 parser.add_argument('-m','--method',help="Hash method to use. Default is MD5, but CRC might be faster on slower CPUs where process is not I/O bound",default="MD5",choices=["MD5","CRC"],required=False)
 parser.add_argument('--version', action='version', version='%(prog)s ' + VERSION)
@@ -358,7 +359,11 @@ for dupset in nodupes:
                 ruta=os.path.join(aux['dir'],aux['name'])
                 sys.stderr.write( "[%d] %-40s %s\n" % (i+1,ruta,metadata_summary(ruta)))
             sys.stderr.write( "Suggested: %s\n" % os.path.join(sugg['dir'],sugg['name']))
-            answer=raw_input("Set %d of %d, preserve files [u, %d - %d, all, show, detail, help, quit] (default: all): " % (nset,len(nodupes),1,len(dupset)))
+            answer = None
+            if args.auto:
+                answer = "sugg"
+            else:
+                answer=raw_input("Set %d of %d, preserve files [u, %d - %d, all, show, detail, help, quit] (default: all): " % (nset,len(nodupes),1,len(dupset)))
             if answer in ["detail","d"]:
                 # Show detailed differences in EXIF tags
                 filelist=[os.path.join(x['dir'],x['name']) for x in dupset]
